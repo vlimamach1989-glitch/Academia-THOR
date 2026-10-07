@@ -1,8 +1,9 @@
-const CACHE_NAME = 'thor-pwa-v2';
+const CACHE_NAME = 'thor-pwa-v3';
 const APP_SHELL = [
   './',
   './index.html',
   './PWA_Aluno.html',
+  './Imagens/PWA_Aluno.html',
   './manifest.json',
   './Imagens/Logo2.jpeg',
   './icons/icon-192.png',
