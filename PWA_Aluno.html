@@ -12,12 +12,13 @@
     <title>Academia THOR - App de Treinos</title>
     <style>
         :root {
-            --primary-color: #f39c12;
-            --accent-blue: #1E88E5;
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --text-color: #ffffff;
-            --text-muted: #b0b0b0;
+            --color-background: #f4f6f9;
+            --primary-color: #ffff;
+            --accent-blue: #0a0b0a;
+            --bg-color: #fe0000;
+            --card-bg: #FFD700;
+            --text-color: #4a21ef;
+            --text-muted: #054268fd;
         }
 
         * {
@@ -30,7 +31,7 @@
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--primary-color);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -42,8 +43,8 @@
             max-width: 420px;
             height: 100vh;
             max-height: 850px;
-            background: #f4f6f9;
-            color: #333;
+            background: var(--color-background);
+            color: var(--text-color);
             border-radius: 30px;
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
@@ -64,7 +65,7 @@
 
         .app-header {
             background-color: var(--accent-blue);
-            color: white;
+            color: #FFD700;
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
@@ -212,7 +213,7 @@
         }
 
         .btn-next-workout:hover {
-            background: var(--accent-blue);
+            background: var(--text-color);
             color: white;
         }
 
@@ -248,17 +249,18 @@
         .workout-badge {
             font-size: 1.5rem;
             font-weight: bold;
-            color: var(--accent-blue);
+            color: var(--bg-color);
             width: 40px;
         }
 
         .workout-details h4 {
             font-size: 0.95rem;
-            color: #222;
+            color: var(--bg-color);
         }
 
         .workout-details p {
             font-size: 0.8rem;
+            font-weight: bold;
             color: #666;
         }
 
@@ -401,7 +403,7 @@
         }
 
         .nav-item.active {
-            color: var(--accent-blue);
+            color: var(--bg-color);
             font-weight: bold;
         }
     </style>
@@ -431,7 +433,7 @@
             </div>
 
             <div class="banner-card">
-                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=500&q=80" alt="Banner Academia">
+                <img src="Imagens/Logo2.jpeg" alt="Banner Academia">
                 <p>Família Thor fazendo a diferença</p>
             </div>
 
