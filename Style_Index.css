@@ -1,0 +1,490 @@
+        :root {
+            --primary-color: #f39c12; /* Amarelo/Laranja estilo Thor */
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #ffffff;
+            --text-muted: #b0b0b0;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+        html {
+            overflow-x: hidden;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        p, h1, h2, h3, h4, a, span, li {
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        header {
+            width: 100%;
+            background: #181818;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        /* Botão de Contato no Header */
+        .btn-contact-header {
+            background-color: var(--primary-color);
+            color: #000;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .btn-contact-header:hover {
+            background-color: #e67e22;
+            transform: scale(1.05);
+        }
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            padding: 20px;
+        }
+        /* Seção Principal / Hero */
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            border: 1px solid #333;
+            margin: 20px 0;
+        }
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+        /* Botão de Instalação do PWA */
+        .btn-install {
+            background-color: var(--primary-color);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 10px rgba(243, 156, 18, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .btn-install:hover {
+            background-color: #e67e22;
+            transform: translateY(-2px);
+        }
+        /* Seções de Conteúdo */
+        section {
+            margin: 40px 0;
+            width: 100%;
+        }
+        h2.section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        /* Grid Padrão */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: left;
+        }
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        /* ESTILO: Cards de Aulas com Carrossel de Imagens */
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .class-card {
+            background: linear-gradient(135deg, #181818 0%, #111 100%);
+            border: 1px solid #333;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+        }
+        .class-carousel {
+            position: relative;
+            height: 200px;
+            width: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+        .carousel-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.4s ease-in-out;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 8px 12px;
+            font-size: 1rem;
+            z-index: 10;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .carousel-btn:hover {
+            background: var(--primary-color);
+            color: #000;
+        }
+        .carousel-btn.prev { left: 10px; }
+        .carousel-btn.next { right: 10px; }
+
+        .class-info {
+            padding: 20px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .class-info h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        .class-time {
+            display: inline-block;
+            background: rgba(243, 156, 18, 0.15);
+            color: var(--primary-color);
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            width: fit-content;
+        }
+        .class-info p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+        /* ESTILO: Cards de Professores */
+        .trainer-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .trainer-card-container {
+            perspective: 1000px;
+            height: 380px;
+            cursor: pointer;
+        }
+        .trainer-card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+        }
+        .trainer-card.flipped {
+            transform: rotateY(180deg);
+        }
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            border: 1px solid #333;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1e1e1e 0%, #111111 100%);
+        }
+        .card-front {
+            display: flex;
+            flex-direction: column;
+        }
+        .trainer-avatar {
+            height: 280px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            border-bottom: 3px solid var(--primary-color);
+        }
+        .trainer-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--primary-color);
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border-radius: 20px;
+            border: 1px solid var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .trainer-front-info {
+            padding: 20px;
+            text-align: center;
+            background: #181818;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .trainer-front-info h3 {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .click-hint {
+            font-size: 0.75rem;
+            color: var(--primary-color);
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: left;
+            background: #1a1a1a;
+            border: 1px solid var(--primary-color);
+        }
+        .card-back h3 {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        .card-back p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .specialty-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+        .specialty-list li {
+            color: #fff;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .specialty-list li::before {
+            content: "⚡";
+            color: var(--primary-color);
+        }
+        /* Galeria de Fotos */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+        .photo-item {
+            height: 180px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            transition: transform 0.3s;
+        }
+        .photo-item:hover {
+            transform: scale(1.03);
+        }
+        .photo-item span {
+            background: rgba(0, 0, 0, 0.75);
+            width: 100%;
+            padding: 8px;
+            text-align: center;
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        /* ESTILO: Seção de Contatos */
+        .contact-box {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .contact-item {
+            background: #181818;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #222;
+        }
+        .contact-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        .contact-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        footer {
+            font-size: 0.8rem;
+            color: #666;
+            margin: 40px 0 20px 0;
+            text-align: center;
+            width: 100%;
+        }
+        #desktop-warning {
+            display: none;
+            background: #e74c3c;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+                padding: 18px 15px;
+            }
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .container {
+                padding: 15px;
+            }
+            .hero {
+                padding: 30px 15px;
+            }
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+            .hero p {
+                font-size: 0.95rem;
+            }
+            .btn-install {
+                width: 100%;
+                justify-content: center;
+                font-size: 1rem;
+            }
+            .grid-cards,
+            .class-grid,
+            .trainer-cards-grid,
+            .photo-gallery,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .class-carousel {
+                height: 180px;
+            }
+            .class-info h3 {
+                font-size: 1.05rem;
+            }
+            .trainer-card-container {
+                height: 340px;
+            }
+            .card-back {
+                padding: 20px 15px;
+            }
+        }

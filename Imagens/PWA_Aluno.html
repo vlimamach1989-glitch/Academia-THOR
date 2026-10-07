@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1E88E5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="THOR">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" href="../icons/icon-192.png">
+    <title>Academia THOR - App de Treinos</title>
+    <style>
+        :root {
+            --primary-color: #f39c12;
+            --accent-blue: #1E88E5;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #ffffff;
+            --text-muted: #b0b0b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .phone-frame {
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            max-height: 850px;
+            background: #f4f6f9;
+            color: #333;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 10px solid #222;
+        }
+
+        @media (max-width: 480px) {
+            .phone-frame {
+                height: 100vh;
+                max-height: 100vh;
+                border-radius: 0;
+                border: none;
+            }
+        }
+
+        .app-header {
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+
+        .app-header span.right-info {
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        .app-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: none;
+            padding-bottom: 70px;
+        }
+
+        .app-content.active {
+            display: block;
+        }
+
+        /* TELA 1: HOME */
+        .user-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 12px;
+            color: #555;
+        }
+
+        .user-info h3 {
+            font-size: 1rem;
+            color: #222;
+        }
+
+        .user-info p {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .qrcode-box {
+            background: white;
+            border-radius: 12px;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+            color: var(--accent-blue);
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .banner-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .banner-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+
+        .banner-card p {
+            padding: 10px;
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        .progress-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .progress-header b {
+            color: var(--accent-blue);
+        }
+
+        .progress-bar-container {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar-fill {
+            background: var(--accent-blue);
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .btn-next-workout {
+            width: 100%;
+            background: white;
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .btn-next-workout:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        /* TELA 2: TREINOS */
+        .workout-top-info {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+        }
+
+        .workout-item-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .workout-item-card:active {
+            transform: scale(0.98);
+        }
+
+        .workout-badge {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-blue);
+            width: 40px;
+        }
+
+        .workout-details h4 {
+            font-size: 0.95rem;
+            color: #222;
+        }
+
+        .workout-details p {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .workout-count {
+            text-align: right;
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+
+        /* TELA 3: DETALHE DO TREINO B */
+        .exercise-card {
+            background: white;
+            border-radius: 12px;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            margin-bottom: 10px;
+        }
+
+        .exercise-img {
+            width: 45px;
+            height: 45px;
+            background: #eaeaea;
+            border-radius: 8px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .exercise-info {
+            flex: 1;
+        }
+
+        .exercise-info h5 {
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            margin-bottom: 4px;
+        }
+
+        .exercise-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.75rem;
+            color: #555;
+        }
+
+        .exercise-stats span b {
+            display: block;
+            color: #000;
+            font-size: 0.85rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .3s;
+            border-radius: 22px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #4CD964;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+
+        .generic-screen {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            color: #444;
+            margin-top: 20px;
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: white;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .nav-item {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #777;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            width: 20%;
+        }
+
+        .nav-item span.nav-icon {
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+        }
+
+        .nav-item.active {
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-frame">
+        
+        <div class="app-header" id="header-title">
+            <span>Academia THOR</span>
+            <span class="right-info" id="header-right"></span>
+        </div>
+
+        <!-- TELA 1: HOME -->
+        <div id="screen-home" class="app-content active">
+            <div class="user-card">
+                <div class="user-avatar">👤</div>
+                <div class="user-info">
+                    <h3>Vinicius Machado Lima</h3>
+                    <p>Aluno Ativo • Plano Elite</p>
+                </div>
+            </div>
+
+            <div class="qrcode-box" onclick="alert('QR Code de Acesso gerado com sucesso na catraca!')">
+                <span>✓ Liberar Acesso por QR Code</span>
+                <span>📱</span>
+            </div>
+
+            <div class="banner-card">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=500&q=80" alt="Banner Academia">
+                <p>Família Thor fazendo a diferença</p>
+            </div>
+
+            <div class="progress-card">
+                <div class="progress-header">
+                    <span>Sessões realizadas</span>
+                    <span><b>42</b>/30</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill"></div>
+                </div>
+                <button class="btn-next-workout" onclick="switchTab('treino-detalhe')">Próximo treino <b>B</b></button>
+            </div>
+        </div>
+
+        <!-- TELA 2: TREINOS (Lista) -->
+        <div id="screen-treino" class="app-content">
+            <div class="workout-top-info">
+                <div>
+                    <p style="font-size: 0.75rem; color: #777;">Objetivo</p>
+                    <h4 style="color: #222; font-size: 0.95rem;">Hipertrofia</h4>
+                </div>
+                <div style="text-align: right;">
+                    <p style="font-size: 0.75rem; color: #777;">Data de início</p>
+                    <h4 style="color: #222; font-size: 0.95rem;">17/09/2025</h4>
+                </div>
+            </div>
+
+            <div class="workout-item-card" onclick="switchTab('treino-detalhe')">
+                <div class="workout-badge">A</div>
+                <div class="workout-details">
+                    <h4>Grupos musculares</h4>
+                    <p>Peito / Tríceps</p>
+                </div>
+                <div class="workout-count">7 exercícios</div>
+            </div>
+
+            <div class="workout-item-card" onclick="switchTab('treino-detalhe')">
+                <div class="workout-badge">B</div>
+                <div class="workout-details">
+                    <h4>Grupos musculares</h4>
+                    <p>Antebraço / Bíceps / Costas</p>
+                </div>
+                <div class="workout-count">7 exercícios</div>
+            </div>
+
+            <div class="workout-item-card" onclick="switchTab('treino-detalhe')">
+                <div class="workout-badge">C</div>
+                <div class="workout-details">
+                    <h4>Grupos musculares</h4>
+                    <p>Ombro / Perna / Trapézio</p>
+                </div>
+                <div class="workout-count">8 exercícios</div>
+            </div>
+
+            <div style="background: white; border-radius: 12px; padding: 12px; text-align: center; font-size: 0.85rem; color: #555; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
+                🏆 Último treino registrado no app: <b>A</b>
+            </div>
+        </div>
+
+        <!-- TELA 3: DETALHE DO TREINO B -->
+        <div id="screen-treino-detalhe" class="app-content">
+            <div class="exercise-card">
+                <div class="exercise-img">🦾</div>
+                <div class="exercise-info">
+                    <h5>Crucifixo Inverso No Peck</h5>
+                    <div class="exercise-stats">
+                        <span><b>3</b> Séries</span>
+                        <span><b>12</b> Repetições</span>
+                        <span><b>40 kg</b> Carga</span>
+                    </div>
+                </div>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-img">🏋️‍♂️</div>
+                <div class="exercise-info">
+                    <h5>Puxador Com Triângulo</h5>
+                    <div class="exercise-stats">
+                        <span><b>3</b> Séries</span>
+                        <span><b>12</b> Repetições</span>
+                        <span><b>50 kg</b> Carga</span>
+                    </div>
+                </div>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-img">🔄</div>
+                <div class="exercise-info">
+                    <h5>Remada Art Simultanea</h5>
+                    <div class="exercise-stats">
+                        <span><b>3</b> Séries</span>
+                        <span><b>12</b> Repetições</span>
+                        <span><b>-</b> Carga</span>
+                    </div>
+                </div>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-img">⚡</div>
+                <div class="exercise-info">
+                    <h5>Rosca Martelo Halter</h5>
+                    <div class="exercise-stats">
+                        <span><b>3</b> Séries</span>
+                        <span><b>12</b> Repetições</span>
+                        <span><b>10 kg</b> Carga</span>
+                    </div>
+                </div>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+
+            <div class="exercise-card">
+                <div class="exercise-img">💪</div>
+                <div class="exercise-info">
+                    <h5>Maquina Scott</h5>
+                    <div class="exercise-stats">
+                        <span><b>3</b> Séries</span>
+                        <span><b>12</b> Repetições</span>
+                        <span><b>10 kg</b> Carga</span>
+                    </div>
+                </div>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+            </div>
+        </div>
+
+        <!-- OUTRAS TELAS -->
+        <div id="screen-pagamentos" class="app-content">
+            <div class="generic-screen">
+                <h3>💰 Mensalidades</h3>
+                <p style="margin-top: 10px; color: #666;">Faturas pendentes: <b>R$ 0,00</b></p>
+                <p style="font-size: 0.8rem; color: #28a745; margin-top: 5px;">Conta em dia!</p>
+            </div>
+        </div>
+
+        <div id="screen-avaliacao" class="app-content">
+            <div class="generic-screen">
+                <h3>📊 Avaliação Física</h3>
+                <p style="margin-top: 10px; color: #666;">Última bioimpedância: 10/01/2026</p>
+                <p style="font-size: 0.85rem; margin-top: 10px;">Evolução de massa magra sob controle.</p>
+            </div>
+        </div>
+
+        <div id="screen-mais" class="app-content">
+            <div class="generic-screen">
+                <h3>⚙️ Configurações e Ajuda</h3>
+                <p style="margin-top: 10px; color: #666;">Versão do App: 2.4.1 (Thor PWA)</p>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation Bar com IDs para controle correto -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" id="nav-home" onclick="switchTab('home')">
+                <span class="nav-icon">🏠</span>
+                Home
+            </button>
+            <button class="nav-item" id="nav-pagamentos" onclick="switchTab('pagamentos')">
+                <span class="nav-icon">💲</span>
+                Pagamentos
+            </button>
+            <button class="nav-item" id="nav-treino" onclick="switchTab('treino')">
+                <span class="nav-icon">🏋‍♂️</span>
+                Treino
+            </button>
+            <button class="nav-item" id="nav-avaliacao" onclick="switchTab('avaliacao')">
+                <span class="nav-icon">📋</span>
+                Avaliação
+            </button>
+            <button class="nav-item" id="nav-mais" onclick="switchTab('mais')">
+                <span class="nav-icon">☰</span>
+                Mais
+            </button>
+        </nav>
+
+    </div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../sw.js')
+                    .then(() => console.log('Service Worker registrado com sucesso.'))
+                    .catch((error) => console.log('Erro ao registrar Service Worker:', error));
+            });
+        }
+
+        function switchTab(tabName) {
+            // Esconde todas as abas
+            document.querySelectorAll('.app-content').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Remove a classe active de todos os botões da barra inferior
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Mapeamento e ativação da tela e do botão correspondente
+            if (tabName === 'treino-detalhe') {
+                document.getElementById('screen-treino-detalhe').classList.add('active');
+                document.getElementById('header-title').querySelector('span').innerText = "Treino B";
+                document.getElementById('header-right').innerText = "00:00";
+                // Acende o ícone de Treino na barra inferior por estar dentro do contexto de treinos
+                document.getElementById('nav-treino').classList.add('active');
+            } else {
+                document.getElementById('screen-' + tabName).classList.add('active');
+                
+                // Ativa o botão correspondente na barra inferior
+                const navBtn = document.getElementById('nav-' + tabName);
+                if (navBtn) {
+                    navBtn.classList.add('active');
+                }
+
+                // Ajusta textos do cabeçalho superior
+                const headerSpan = document.getElementById('header-title').querySelector('span');
+                const headerRight = document.getElementById('header-right');
+                
+                if (tabName === 'home') {
+                    headerSpan.innerText = "Academia THOR";
+                    headerRight.innerText = "R$ 0,00";
+                } else if (tabName === 'treino') {
+                    headerSpan.innerText = "Treinos";
+                    headerRight.innerText = "Histórico";
+                } else if (tabName === 'pagamentos') {
+                    headerSpan.innerText = "Pagamentos";
+                    headerRight.innerText = "";
+                } else if (tabName === 'avaliacao') {
+                    headerSpan.innerText = "Avaliação";
+                    headerRight.innerText = "";
+                } else if (tabName === 'mais') {
+                    headerSpan.innerText = "Mais Opções";
+                    headerRight.innerText = "";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
