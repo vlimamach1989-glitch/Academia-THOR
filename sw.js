@@ -1,10 +1,12 @@
-const CACHE_NAME = 'thor-pwa-v1';
+const CACHE_NAME = 'thor-pwa-v2';
 const APP_SHELL = [
   './',
-  './Imagens/PWA_Aluno.html',
+  './index.html',
+  './PWA_Aluno.html',
   './manifest.json',
-  './Imagens/Logo2.png',
-  './Imagens/Logo2.png'
+  './Imagens/Logo2.jpeg',
+  './icons/icon-192.png',
+  './icons/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -38,7 +40,7 @@ self.addEventListener('fetch', (event) => {
         const responseClone = response.clone();
         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
         return response;
-      }).catch(() => caches.match('./Imagens/PWA_Aluno.html'));
+      }).catch(() => caches.match('./PWA_Aluno.html'));
     })
   );
 });
