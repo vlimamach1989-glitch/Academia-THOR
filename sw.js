@@ -3,8 +3,8 @@ const APP_SHELL = [
   './',
   './Imagens/PWA_Aluno.html',
   './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png'
+  './Imagens/Logo2.png',
+  './Imagens/Logo2.png'
 ];
 
 self.addEventListener('install', (event) => {
