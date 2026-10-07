@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +9,17 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="THOR">
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" href="Imagens/Logo2.png">
     <title>Academia THORrrr</title>
     <link rel="stylesheet" href="Style_Index.css">
 </head>
+
 <body>
 
     <header>
         <div class="logo-container">
-            <span style="font-size: 1.5rem; font-weight: 900; color: #f39c12; text-transform: uppercase; letter-spacing: 1px;">⚡ THOR <span style="color:#fff">GYM</span></span>
+            <img src="Imagens/Logo2.jpeg" alt="⚡ THOR GYM" class="logo"
+                style="font-size: 1.5rem; font-weight: 900; color: #f39c12; text-transform: uppercase; letter-spacing: 1px; height: 40px;">
         </div>
         <nav>
             <a href="#aulas">Aulas teste</a>
@@ -32,7 +35,8 @@
         <div class="hero">
             <div id="desktop-warning">⚠️ Para baixar o app de treinos, acesse pelo navegador do seu celular!</div>
             <h1>Seu Treino na Palma da Mão</h1>
-            <p>Acesse seus treinos personalizados, acompanhe sua evolução e treine até mesmo sem internet com o nosso aplicativo oficial da academia.</p>
+            <p>Acesse seus treinos personalizados, acompanhe sua evolução e treine até mesmo sem internet com o nosso
+                aplicativo oficial da academia.</p>
             <button id="install-btn" class="btn-install">
                 📲 Baixar App de Treinos
             </button>
@@ -42,15 +46,21 @@
         <section id="aulas">
             <h2 class="section-title">Nossas Aulas</h2>
             <div class="class-grid">
-                
+
                 <!-- Aula 1: Musculação -->
                 <div class="class-card">
                     <div class="class-carousel">
                         <button class="carousel-btn prev" onclick="moveSlide(this, -1)">❮</button>
                         <div class="carousel-track">
-                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80');"></div>
-                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80');"></div>
-                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80');"></div>
+                            <div class="carousel-slide"
+                                style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80');">
+                            </div>
+                            <div class="carousel-slide"
+                                style="background-image: url('https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80');">
+                            </div>
+                            <div class="carousel-slide"
+                                style="background-image: url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80');">
+                            </div>
                         </div>
                         <button class="carousel-btn next" onclick="moveSlide(this, 1)">❯</button>
                     </div>
@@ -58,7 +68,8 @@
                         <h3>🏋‍♂️ Musculação</h3>
                         <span class="class-time">Seg / Sex - 06h às 22h</span>
                         <span class="class-time">Sab - 08h às 12h</span>
-                        <p>Horário livre com acompanhamento de instrutores especializados para hipertrofia e condicionamento.</p>
+                        <p>Horário livre com acompanhamento de instrutores especializados para hipertrofia e
+                            condicionamento.</p>
                     </div>
                 </div>
 
@@ -67,16 +78,23 @@
                     <div class="class-carousel">
                         <button class="carousel-btn prev" onclick="moveSlide(this, -1)">❮</button>
                         <div class="carousel-track">
-                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1517931524326-bdd4a6e2e591?auto=format&fit=crop&w=600&q=80');"></div>
-                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=600&q=80');"></div>
-                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=600&q=80');"></div>
+                            <div class="carousel-slide"
+                                style="background-image: url('https://images.unsplash.com/photo-1517931524326-bdd4a6e2e591?auto=format&fit=crop&w=600&q=80');">
+                            </div>
+                            <div class="carousel-slide"
+                                style="background-image: url('https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=600&q=80');">
+                            </div>
+                            <div class="carousel-slide"
+                                style="background-image: url('https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=600&q=80');">
+                            </div>
                         </div>
                         <button class="carousel-btn next" onclick="moveSlide(this, 1)">❯</button>
                     </div>
                     <div class="class-info">
                         <h3>🔥 Treino Funcional Thor</h3>
                         <span class="class-time">Ter / Qui - 07h e 19:30h</span>
-                        <p>Treinamento funcional de alta intensidade focado em resistência, força e queima de gordura.</p>
+                        <p>Treinamento funcional de alta intensidade focado em resistência, força e queima de gordura.
+                        </p>
                     </div>
                 </div>
 
@@ -85,9 +103,15 @@
                     <div class="class-carousel">
                         <button class="carousel-btn prev" onclick="moveSlide(this, -1)">❮</button>
                         <div class="carousel-track">
-                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1565992441121-4367c2967103?auto=format&fit=crop&w=600&q=80');"></div>
-                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80');"></div>
-                            <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1552072092-e8bf6ae52629?auto=format&fit=crop&w=600&q=80');"></div>
+                            <div class="carousel-slide"
+                                style="background-image: url('https://images.unsplash.com/photo-1565992441121-4367c2967103?auto=format&fit=crop&w=600&q=80');">
+                            </div>
+                            <div class="carousel-slide"
+                                style="background-image: url('https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=600&q=80');">
+                            </div>
+                            <div class="carousel-slide"
+                                style="background-image: url('https://images.unsplash.com/photo-1552072092-e8bf6ae52629?auto=format&fit=crop&w=600&q=80');">
+                            </div>
                         </div>
                         <button class="carousel-btn next" onclick="moveSlide(this, 1)">❯</button>
                     </div>
@@ -103,15 +127,18 @@
         <!-- Seção de Professores (Cards Interativos ao Clique) -->
         <section id="professores">
             <h2 class="section-title">Nossos Professores</h2>
-            <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;">Toque em um card para ver as especialidades e detalhes do professor.</p>
-            
+            <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;">Toque em um card para ver as
+                especialidades e detalhes do professor.</p>
+
             <div class="trainer-cards-grid">
-                
+
                 <!-- Professor 1 -->
-                <div class="trainer-card-container" onclick="this.querySelector('.trainer-card').classList.toggle('flipped')">
+                <div class="trainer-card-container"
+                    onclick="this.querySelector('.trainer-card').classList.toggle('flipped')">
                     <div class="trainer-card">
                         <div class="card-face card-front">
-                            <div class="trainer-avatar" style="background-image: url('https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=600&q=80');">
+                            <div class="trainer-avatar"
+                                style="background-image: url('https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=600&q=80');">
                                 <span class="trainer-badge">Elite</span>
                             </div>
                             <div class="trainer-front-info">
@@ -128,16 +155,19 @@
                                 <li>Treino de Artes Marciais, Defesa Pessoal (Jiu-Jitsu)/MMA</li>
                                 <li>Treinos Personalizados e Avaliação Fisica</li>
                             </ul>
-                            <span class="click-hint" style="text-align: center; margin-top: 15px;">🔄 Clique para voltar</span>
+                            <span class="click-hint" style="text-align: center; margin-top: 15px;">🔄 Clique para
+                                voltar</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Professor 2 -->
-                <div class="trainer-card-container" onclick="this.querySelector('.trainer-card').classList.toggle('flipped')">
+                <div class="trainer-card-container"
+                    onclick="this.querySelector('.trainer-card').classList.toggle('flipped')">
                     <div class="trainer-card">
                         <div class="card-face card-front">
-                            <div class="trainer-avatar" style="background-image: url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=600&q=80');">
+                            <div class="trainer-avatar"
+                                style="background-image: url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=600&q=80');">
                                 <span class="trainer-badge">Coach</span>
                             </div>
                             <div class="trainer-front-info">
@@ -147,14 +177,16 @@
                         </div>
                         <div class="card-face card-back">
                             <h3>Vanessa "Thor" </h3>
-                            <p>Foco em mobilidade, saúde articular e queima de gordura acelerada com alta performance.</p>
+                            <p>Foco em mobilidade, saúde articular e queima de gordura acelerada com alta performance.
+                            </p>
                             <ul class="specialty-list">
                                 <li>Treinamento Funcional</li>
                                 <li>Emagrecimento Acelerado</li>
                                 <li>Treino Específico para Mulheres</li>
                                 <li>Treinos Personalizados e Avaliação Fisica</li>
                             </ul>
-                            <span class="click-hint" style="text-align: center; margin-top: 15px;">🔄 Clique para voltar</span>
+                            <span class="click-hint" style="text-align: center; margin-top: 15px;">🔄 Clique para
+                                voltar</span>
                         </div>
                     </div>
                 </div>
@@ -167,11 +199,13 @@
             <div class="grid-cards">
                 <div class="card">
                     <h3>🔥 Desafio Thor 30 Dias</h3>
-                    <p>Competição interna de emagrecimento e ganho de massa com premiação para os melhores resultados do mês.</p>
+                    <p>Competição interna de emagrecimento e ganho de massa com premiação para os melhores resultados do
+                        mês.</p>
                 </div>
                 <div class="card">
                     <h3>🥊 Mutirão de Funcional ao Ar Livre</h3>
-                    <p>Aulões especiais abertos aos sábados na praça central para integrar alunos e testar a resistência.</p>
+                    <p>Aulões especiais abertos aos sábados na praça central para integrar alunos e testar a
+                        resistência.</p>
                 </div>
                 <div class="card">
                     <h3>💪 Workshop de Levantamento Terra</h3>
@@ -184,16 +218,20 @@
         <section id="galeria">
             <h2 class="section-title">Galeria de Fotos</h2>
             <div class="photo-gallery">
-                <div class="photo-item" style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80');">
+                <div class="photo-item"
+                    style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80');">
                     <span>Área de Pesos Livres</span>
                 </div>
-                <div class="photo-item" style="background-image: url('https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=600&q=80');">
+                <div class="photo-item"
+                    style="background-image: url('https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=600&q=80');">
                     <span>Sala de Cardio</span>
                 </div>
-                <div class="photo-item" style="background-image: url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80');">
+                <div class="photo-item"
+                    style="background-image: url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&q=80');">
                     <span>Espaço Funcional</span>
                 </div>
-                <div class="photo-item" style="background-image: url('https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?auto=format&fit=crop&w=600&q=80');">
+                <div class="photo-item"
+                    style="background-image: url('https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?auto=format&fit=crop&w=600&q=80');">
                     <span>Equipe & Alunos</span>
                 </div>
             </div>
@@ -202,17 +240,22 @@
         <!-- Seção de Contatos -->
         <section id="contato">
             <div class="contact-box">
-                <h2 class="section-title" style="border: none; padding: 0; text-align: center; margin-bottom: 10px;">Fale Conosco</h2>
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Venha nos fazer uma visita ou entre em contato pelos nossos canais oficiais.</p>
-                
+                <h2 class="section-title" style="border: none; padding: 0; text-align: center; margin-bottom: 10px;">
+                    Fale Conosco</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Venha nos fazer uma visita ou entre em contato
+                    pelos nossos canais oficiais.</p>
+
                 <div class="contact-grid">
                     <div class="contact-item">
                         <h4>📱 WhatsApp</h4>
                         <p>(11) 99999-9999</p>
                     </div>
-                   <div class="contact-item">
+                    <div class="contact-item">
                         <h4>📸 Instagram</h4>
-                        <a href="https://www.instagram.com/thor.academia?stkn=MTk4ZGdkYzhnajZobQ==" target="_blank" style="color: var(--primary-color); text-decoration: none; font-size: 0.95srem; font-weight: 500; display: inline-block; margin-top: 5px; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">@thor.academia ↗</a>
+                        <a href="https://www.instagram.com/thor.academia?stkn=MTk4ZGdkYzhnajZobQ==" target="_blank"
+                            style="color: var(--primary-color); text-decoration: none; font-size: 0.95srem; font-weight: 500; display: inline-block; margin-top: 5px; transition: opacity 0.2s;"
+                            onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">@thor.academia
+                            ↗</a>
                     </div>
                     <div class="contact-item">
                         <h4>📍 Endereço</h4>
@@ -238,19 +281,19 @@
             } else {
                 carousel = carouselOrBtn.closest('.class-carousel');
             }
-            
+
             const track = carousel.querySelector('.carousel-track');
             const slides = track.querySelectorAll('.carousel-slide');
-            
+
             let currentIndex = parseInt(carousel.dataset.index || '0');
-            
+
             currentIndex += direction;
-            
+
             if (currentIndex >= slides.length) {
                 currentIndex = 0;
             } else if (currentIndex < 0) {
                 currentIndex = slides.length - 1;
-            }            
+            }
             carousel.dataset.index = currentIndex;
             track.style.transform = `translateX(-${currentIndex * 100}%)`;
         }
@@ -260,7 +303,7 @@
             carousels.forEach(carousel => {
                 setInterval(() => {
                     moveSlide(carousel, 1);
-                }, 3500); 
+                }, 3500);
             });
         });
         let deferredPrompt;
@@ -272,7 +315,7 @@
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').catch(() => {});
+                navigator.serviceWorker.register('sw.js').catch(() => { });
             });
         }
 
@@ -306,4 +349,5 @@
         });
     </script>
 </body>
+
 </html>
