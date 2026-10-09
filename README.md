@@ -1,17 +1,103 @@
 # Academia-THOR
-vamos criar a pagima do adm, depois da index e aluno, essa é a pg mais importante, aqui é onde tudo acontece, nessa pagina o adm vai fazer algumas coisas importantes e adininistrar o seu negocio, a pagina de conter :
-1- de ter um login ( para somente ele poder entrar.)
-2-deve ter aria para cadastro de novo aluno com nome, doc, telefone, endereço, cadastro de atestado medico (foto ou xarox)
-3-deve ter aria para visualizar cadastros, avaliacão fisica e validade de atestado (caso atestado apresentado) e situação (como se débitos em dia ou inadimplente)
-4-deve ter aria para  editar ou deletar cadastro de alunos.
-5-deve ter aria para cadastro de planos, conforme o adm quiser.
-6-deve ter aria para cadastro de aulas com nome. horario, fotos e descrição das aulas. (esse cadastro deve ter um botão edtar e um botão para lançar no site oficial)
-7-deve ter aria para cadastro de profersseres, crf, descrição e especialidades.(esse cadastro deve ter um botão edtar e um botão para lançar no site oficial)
-8-deve ter aria para cadastro de eventos ou promocoes (esse cadastro deve ter um botão edtar e um botão para lançar no site oficial).
-9-deve ter aria para cadastro de fotos para a galeria (esse cadastro deve ter um botão edtar e um botão para lançar no site oficial).
-10-deve ter aria de cadastro e edção de cantatos, edereço e redes sociais. ( e dição das mesmas).
-11-deve ter aria para cadastro aria de edção de treinos osde vai aparecer os videos e o adm edita os nomes.
-12-deve ter aria para cadastrar terinos ( tipo terinos pre feitos, trinos curinga)
-13-deve ter aria onde o educador monta o treno do aluno cadastrodo e editar os terinos, deve ser possivel cadastrar 7 treinos por alunos, tipo treino A,B,C,D,E,F,G, e os grupos musculares, esses treinoas ão individuais,( essda etapa professores podem ter acesso).
 
-monte somente a pagina ainda nao tenho banco de dados
+Aplicação web institucional e PWA para uma academia voltada ao gerenciamento de alunos, treinos, aulas, professores e experiência digital do cliente.
+
+## Visão geral
+
+O projeto reúne um site comercial para apresentação da academia com:
+
+- landing page institucional;
+- seção de aulas, professores, eventos, galeria e contato;
+- PWA para alunos com acesso a exercícios, progresso e treino do dia;
+- painel de professor para criação e edição de fichas de treino;
+- painel administrativo para gestão de alunos, planos, aulas, eventos, fotos e configurações gerais.
+
+## Funcionalidades
+
+### Site público
+- Página inicial com hero section e CTA para download do app;
+- apresentação de modalidades e horários;
+- cards de professores com informações detalhadas;
+- seção de eventos e desafios;
+- galeria de fotos;
+- formulário de contato e informações da academia.
+
+### App do aluno (PWA)
+- menu de navegação para home, treinos, pagamentos e avaliação;
+- visualização de treinos por ficha (A, B, C, etc.);
+- progresso de sessões realizadas;
+- acesso por QR Code e informações do aluno;
+- funcionamento offline/instalável em dispositivos móveis.
+
+### Portal do professor
+- login simples para área do professor;
+- seleção de aluno cadastrado;
+- escolha de ficha de treino;
+- cadastro de grupo muscular, exercícios, séries, repetições e observações;
+- persistência local via `localStorage`.
+
+### Painel administrativo
+- gestão de alunos;
+- cadastro de planos e aulas;
+- cadastro de professores;
+- cadastro de promoções e eventos;
+- administração de fotos para galeria;
+- edição de contatos, redes sociais e informações gerais.
+
+## Estrutura do projeto
+
+```text
+Academia-THOR/
+├── admin.html               # painel administrativo
+├── index.html               # site institucional
+├── professor.html           # portal do professor
+├── PWA_Aluno.html           # PWA do aluno
+├── Imagens/                 # imagens e banners
+├── icons/                   # ícones para o PWA
+├── JavaScript/              # scripts da aplicação
+├── Style/                   # estilos CSS
+├── manifest.json            # configuração do PWA
+├── README.md                # documentação do projeto
+└── ...
+```
+
+## Como executar
+
+Como é um projeto estático, basta abrir os arquivos HTML diretamente em um navegador ou servir a pasta localmente.
+
+### Opção 1: abrir diretamente
+- abra `index.html` no navegador;
+- para acessar o painel administrativo, abra `admin.html`;
+- para acessar o portal do professor, abra `professor.html`;
+- para testar o app do aluno, abra `PWA_Aluno.html`.
+
+### Opção 2: servidor local
+
+```bash
+cd /workspaces/Academia-THOR
+python3 -m http.server 8000
+```
+
+Depois acesse:
+
+- `http://localhost:8000/`
+- `http://localhost:8000/admin.html`
+- `http://localhost:8000/professor.html`
+- `http://localhost:8000/PWA_Aluno.html`
+
+## Observações
+
+- O projeto usa armazenamento local (`localStorage`) para simular dados do sistema sem backend;
+- a experiência mobile é otimizada para uso como PWA;
+- o conteúdo e os dados podem ser ajustados para atender regras reais de negócio, autenticação e persistência em banco de dados.
+
+## Tecnologias
+
+- HTML5
+- CSS3
+- JavaScript
+- Progressive Web App (PWA)
+
+## Licença
+
+Este projeto está disponível para uso educacional e de demonstração. Ajustes e customizações podem ser feitos conforme a necessidade do cliente ou da equipe de desenvolvimento.
