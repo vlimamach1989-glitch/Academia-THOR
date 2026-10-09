@@ -1,0 +1,57 @@
+       if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(() => console.log('Service Worker registrado com sucesso.'))
+                    .catch((error) => console.log('Erro ao registrar Service Worker:', error));
+            });
+        }
+
+        function switchTab(tabName) {
+            // Esconde todas as abas
+            document.querySelectorAll('.app-content').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Remove a classe active de todos os botões da barra inferior
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Mapeamento e ativação da tela e do botão correspondente
+            if (tabName === 'treino-detalhe') {
+                document.getElementById('screen-treino-detalhe').classList.add('active');
+                document.getElementById('header-title').querySelector('span').innerText = "Treino B";
+                document.getElementById('header-right').innerText = "00:00";
+                // Acende o ícone de Treino na barra inferior por estar dentro do contexto de treinos
+                document.getElementById('nav-treino').classList.add('active');
+            } else {
+                document.getElementById('screen-' + tabName).classList.add('active');
+                
+                // Ativa o botão correspondente na barra inferior
+                const navBtn = document.getElementById('nav-' + tabName);
+                if (navBtn) {
+                    navBtn.classList.add('active');
+                }
+
+                // Ajusta textos do cabeçalho superior
+                const headerSpan = document.getElementById('header-title').querySelector('span');
+                const headerRight = document.getElementById('header-right');
+                
+                if (tabName === 'home') {
+                    headerSpan.innerText = "Academia THOR";
+                    headerRight.innerText = "R$ 0,00";
+                } else if (tabName === 'treino') {
+                    headerSpan.innerText = "Treinos";
+                    headerRight.innerText = "Histórico";
+                } else if (tabName === 'pagamentos') {
+                    headerSpan.innerText = "Pagamentos";
+                    headerRight.innerText = "";
+                } else if (tabName === 'avaliacao') {
+                    headerSpan.innerText = "Avaliação";
+                    headerRight.innerText = "";
+                } else if (tabName === 'mais') {
+                    headerSpan.innerText = "Mais Opções";
+                    headerRight.innerText = "";
+                }
+            }
+        }
