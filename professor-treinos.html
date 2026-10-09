@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Professor - Montagem de Treinos</title>
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --sidebar-bg: #0f172a;
+            --sidebar-text: #94a3b8;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --success: #22c55e;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* TELA DE LOGIN DO PROFESSOR */
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--sidebar-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .login-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .login-card h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--sidebar-bg);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-success { background: var(--success); }
+        .btn-success:hover { background: #16a34a; }
+        .btn-danger { background: var(--danger); }
+        .btn-danger:hover { background: #dc2626; }
+
+        /* PAINEL DO PROFESSOR */
+        #professor-panel {
+            display: none;
+            max-width: 900px;
+            margin: 2rem auto;
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .header-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .fichas-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .ficha-btn {
+            flex: 1;
+            padding: 0.6rem;
+            border: 1px solid var(--border);
+            background: #f1f5f9;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .ficha-btn.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN DO PROFESSOR -->
+    <div id="login-screen">
+        <div class="login-card">
+            <h2>Portal do Professor</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>CRF / Usuário</label>
+                    <input type="text" id="prof-user" required placeholder="prof123">
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="prof-pass" required placeholder="senha">
+                </div>
+                <button type="submit" class="btn">Entrar na Área de Treinos</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PAINEL DE MONTAGEM DE TREINOS -->
+    <div id="professor-panel">
+        <div class="header-panel">
+            <h2>Montagem de Treinos Individuais (A - G)</h2>
+            <button class="btn btn-danger" onclick="logout()" style="width: auto; padding: 0.5rem 1rem;">Sair</button>
+        </div>
+
+        <div class="form-group">
+            <label>Selecione o Aluno Cadastrado</label>
+            <select id="select-aluno" onchange="carregarTreinoAluno()"></select>
+        </div>
+
+        <hr style="margin: 1.5rem 0; border:0; border-top:1px solid var(--border);">
+
+        <label style="font-weight:600; display:block; margin-bottom:0.5rem;">Escolha a Ficha de Treino</label>
+        <div class="fichas-nav" id="fichas-container">
+            <div class="ficha-btn active" onclick="selecionarFicha('A')">Treino A</div>
+            <div class="ficha-btn" onclick="selecionarFicha('B')">Treino B</div>
+            <div class="ficha-btn" onclick="selecionarFicha('C')">Treino C</div>
+            <div class="ficha-btn" onclick="selecionarFicha('D')">Treino D</div>
+            <div class="ficha-btn" onclick="selecionarFicha('E')">Treino E</div>
+            <div class="ficha-btn" onclick="selecionarFicha('F')">Treino F</div>
+            <div class="ficha-btn" onclick="selecionarFicha('G')">Treino G</div>
+        </div>
+
+        <input type="hidden" id="ficha-atual" value="A">
+
+        <div class="form-group">
+            <label>Grupo Muscular Alvo (Ex: Peito e Tríceps)</label>
+            <input type="text" id="treino-grupo" placeholder="Informe o grupo muscular desta ficha">
+        </div>
+
+        <div class="form-group">
+            <label>Exercícios, Séries, Repetições e Observações</label>
+            <textarea id="treino-desc" rows="6" placeholder="1. Supino Reto - 4x12 (Vídeo: ...)&#10;2. Crucifixo - 3x10"></textarea>
+        </div>
+
+        <button class="btn btn-success" onclick="salvarTreino()">Salvar Ficha de Treino deste Aluno</button>
+    </div>
+
+    <script>
+        // BANCO DE DADOS LOCAL (Compartilhado via localStorage com o painel do Admin)
+        const getDB = (key) => JSON.parse(localStorage.getItem(key)) || [];
+        const saveDB = (key, data) => localStorage.setItem(key, JSON.stringify(data));
+
+        // LOGIN DO PROFESSOR
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const u = document.getElementById('prof-user').value;
+            const p = document.getElementById('prof-pass').value;
+            // Validação simples (pode ser ajustada para verificar professores cadastrados no admin)
+            if(u.trim() !== '' && p.trim() !== '') {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('professor-panel').style.display = 'block';
+                carregarAlunosSelect();
+            } else {
+                alert('Preencha os dados corretamente.');
+            }
+        });
+
+        function logout() {
+            document.getElementById('professor-panel').style.display = 'none';
+            document.getElementById('login-screen').style.display = 'flex';
+        }
+
+        function carregarAlunosSelect() {
+            const alunos = getDB('alunos');
+            const select = document.getElementById('select-aluno');
+            select.innerHTML = '';
+            if(alunos.length === 0) {
+                select.innerHTML = '<option value="">Nenhum aluno cadastrado no sistema ainda</option>';
+                return;
+            }
+            alunos.forEach(a => {
+                select.innerHTML += `<option value="${a.id}">${a.nome} (Doc: ${a.doc})</option>`;
+            });
+            carregarTreinoAluno();
+        }
+
+        function selecionarFicha(ficha) {
+            document.getElementById('ficha-atual').value = ficha;
+            document.querySelectorAll('.ficha-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            carregarTreinoAluno();
+        }
+
+        function carregarTreinoAluno() {
+            const alunoId = document.getElementById('select-aluno').value;
+            const ficha = document.getElementById('ficha-atual').value;
+            const treinosAlunos = getDB('treinosAlunos');
+            
+            const encontrado = treinosAlunos.find(t => t.alunoId === alunoId && t.ficha === ficha);
+            
+            if(encontrado) {
+                document.getElementById('treino-grupo').value = encontrado.grupo || '';
+                document.getElementById('treino-desc').value = encontrado.desc || '';
+            } else {
+                document.getElementById('treino-grupo').value = '';
+                document.getElementById('treino-desc').value = '';
+            }
+        }
+
+        function salvarTreino() {
+            const alunoId = document.getElementById('select-aluno').value;
+            const ficha = document.getElementById('ficha-atual').value;
+            
+            if(!alunoId) {
+                alert('Selecione um aluno válido!');
+                return;
+            }
+
+            let treinosAlunos = getDB('treinosAlunos');
+            // Remove o treino anterior daquela mesma ficha para atualizar com as novas informações
+            treinosAlunos = treinosAlunos.filter(t => !(t.alunoId === alunoId && t.ficha === ficha));
+
+            treinosAlunos.push({
+                alunoId,
+                ficha,
+                grupo: document.getElementById('treino-grupo').value,
+                desc: document.getElementById('treino-desc').value
+            });
+
+            saveDB('treinosAlunos', treinosAlunos);
+            alert(`Treino ${ficha} salvo com sucesso para o aluno!`);
+        }
+    </script>
+</body>
+</html>

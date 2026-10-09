@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Gestão do Negócio</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --sidebar-bg: #0f172a;
+            --sidebar-text: #94a3b8;
+            --sidebar-hover: #1e293b;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --danger: #ef4444;
+            --success: #22c55e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* TELA DE LOGIN */
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--sidebar-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .login-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .login-card h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--sidebar-bg);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-danger { background: var(--danger); }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-success { background: var(--success); }
+        .btn-success:hover { background: #16a34a; }
+
+        /* PAINEL ADMIN */
+        #admin-panel {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        aside {
+            width: 260px;
+            background: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        aside h1 {
+            color: var(--white);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .menu-list {
+            list-style: none;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .menu-list li {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 0.3rem;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .menu-list li:hover, .menu-list li.active {
+            background: var(--sidebar-hover);
+            color: var(--white);
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        h2.section-title {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        table th, table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        table th {
+            background: #f1f5f9;
+        }
+
+        .badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success { background: #dcfce7; color: #166534; }
+        .badge-danger { background: #fee2e2; color: #991b1b; }
+
+        .actions-cell button {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+            margin-right: 0.3rem;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. LOGIN DO ADMINISTRADOR -->
+    <div id="login-screen">
+        <div class="login-card">
+            <h2>Painel Admin</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>Usuário</label>
+                    <input type="text" id="user" required placeholder="admin">
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="pass" required placeholder="admin">
+                </div>
+                <button type="submit" class="btn">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PAINEL COMPLETO -->
+    <div id="admin-panel">
+        <div class="admin-layout">
+            <aside>
+                <h1>Gestão Fitness</h1>
+                <ul class="menu-list">
+                    <li onclick="switchTab('alunos')" class="active">2, 3 & 4. Alunos & Cadastros</li>
+                    <li onclick="switchTab('planos')">5. Cadastro de Planos</li>
+                    <li onclick="switchTab('aulas')">6. Cadastro de Aulas</li>
+                    <li onclick="switchTab('professores')">7. Professores & CRF</li>
+                    <li onclick="switchTab('eventos')">8. Eventos e Promoções</li>
+                    <li onclick="switchTab('galeria')">9. Galeria de Fotos</li>
+                    <li onclick="switchTab('contatos')">10. Contatos & Redes Sociais</li>
+                    <li onclick="switchTab('treinos-config')">11. Configurar Nomes de Treino</li>
+                    <li onclick="switchTab('treinos-padrao')">12. Treinos Padrão / Curinga</li>
+                </ul>
+                <button class="btn btn-danger" onclick="logout()" style="margin-top:auto;">Sair</button>
+            </aside>
+
+            <main>
+                <!-- 2, 3 & 4. CADASTRO, VISUALIZAÇÃO E EDIÇÃO DE ALUNOS -->
+                <section id="tab-alunos" class="tab-content active">
+                    <h2 class="section-title">Gerenciamento de Alunos</h2>
+                    <form id="form-aluno" style="background:#f8fafc; padding:1.5rem; border-radius:8px; margin-bottom:2rem;">
+                        <h3>Cadastrar Novo Aluno</h3>
+                        <div class="grid-2" style="margin-top:1rem;">
+                            <div class="form-group"><label>Nome Completo</label><input type="text" id="aluno-nome" required></div>
+                            <div class="form-group"><label>Documento (CPF/RG)</label><input type="text" id="aluno-doc" required></div>
+                            <div class="form-group"><label>Telefone</label><input type="text" id="aluno-tel" required></div>
+                            <div class="form-group"><label>Endereço</label><input type="text" id="aluno-end" required></div>
+                            <div class="form-group"><label>Validade Atestado Médico</label><input type="date" id="aluno-atestado-val" required></div>
+                            <div class="form-group"><label>Situação Financeira</label><select id="aluno-situacao"><option value="Em dia">Em dia</option><option value="Inadimplente">Inadimplente</option></select></div>
+                            <div class="form-group" style="grid-column: span 2;"><label>Anexo Atestado (Foto/Xerox)</label><input type="file" id="aluno-foto-atestado"></div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Salvar Aluno</button>
+                    </form>
+
+                    <h3>Alunos Cadastrados, Avaliação e Status</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Doc</th>
+                                <th>Tel / End</th>
+                                <th>Validade Atestado</th>
+                                <th>Situação</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-alunos-body">
+                            <!-- Preenchido via JS -->
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- 5. CADASTRO DE PLANOS -->
+                <section id="tab-planos" class="tab-content">
+                    <h2 class="section-title">Cadastro de Planos</h2>
+                    <form id="form-plano" style="background:#f8fafc; padding:1.5rem; border-radius:8px; margin-bottom:2rem;">
+                        <div class="grid-2">
+                            <div class="form-group"><label>Nome do Plano</label><input type="text" id="plano-nome" required placeholder="Ex: Mensal, Anual"></div>
+                            <div class="form-group"><label>Valor (R$)</label><input type="number" id="plano-valor" required placeholder="99.90"></div>
+                        </div>
+                        <div class="form-group"><label>Descrição / Benefícios</label><textarea id="plano-desc" rows="2"></textarea></div>
+                        <button type="submit" class="btn btn-success">Cadastrar Plano</button>
+                    </form>
+                    <div id="lista-planos"></div>
+                </section>
+
+                <!-- 6. CADASTRO DE AULAS -->
+                <section id="tab-aulas" class="tab-content">
+                    <h2 class="section-title">Cadastro de Aulas</h2>
+                    <form id="form-aula" style="background:#f8fafc; padding:1.5rem; border-radius:8px; margin-bottom:2rem;">
+                        <div class="grid-2">
+                            <div class="form-group"><label>Nome da Aula</label><input type="text" id="aula-nome" required></div>
+                            <div class="form-group"><label>Horário</label><input type="text" id="aula-horario" placeholder="Ex: Seg/Qua 19:00"></div>
+                        </div>
+                        <div class="form-group"><label>Foto (URL)</label><input type="text" id="aula-foto"></div>
+                        <div class="form-group"><label>Descrição</label><textarea id="aula-desc" rows="2"></textarea></div>
+                        <button type="submit" class="btn btn-success">Salvar Aula</button>
+                    </form>
+                    <div id="lista-aulas"></div>
+                </section>
+
+                <!-- 7. CADASTRO DE PROFESSORES -->
+                <section id="tab-professores" class="tab-content">
+                    <h2 class="section-title">Cadastro de Professores</h2>
+                    <form id="form-prof" style="background:#f8fafc; padding:1.5rem; border-radius:8px; margin-bottom:2rem;">
+                        <div class="grid-2">
+                            <div class="form-group"><label>Nome do Professor</label><input type="text" id="prof-nome" required></div>
+                            <div class="form-group"><label>CRF / Registro</label><input type="text" id="prof-crf" required></div>
+                        </div>
+                        <div class="form-group"><label>Especialidades</label><input type="text" id="prof-esp" placeholder="Ex: Musculação, Pilates"></div>
+                        <div class="form-group"><label>Descrição / Bio</label><textarea id="prof-desc" rows="2"></textarea></div>
+                        <button type="submit" class="btn btn-success">Salvar Professor</button>
+                    </form>
+                    <div id="lista-professores"></div>
+                </section>
+
+                <!-- 8. EVENTOS E PROMOÇÕES -->
+                <section id="tab-eventos" class="tab-content">
+                    <h2 class="section-title">Cadastro de Eventos e Promoções</h2>
+                    <form id="form-evento" style="background:#f8fafc; padding:1.5rem; border-radius:8px; margin-bottom:2rem;">
+                        <div class="grid-2">
+                            <div class="form-group"><label>Título do Evento/Promoção</label><input type="text" id="evento-titulo" required></div>
+                            <div class="form-group"><label>Data Limite</label><input type="date" id="evento-data"></div>
+                        </div>
+                        <div class="form-group"><label>Descrição</label><textarea id="evento-desc" rows="2"></textarea></div>
+                        <button type="submit" class="btn btn-success">Salvar Evento</button>
+                    </form>
+                    <div id="lista-eventos"></div>
+                </section>
+
+                <!-- 9. GALERIA DE FOTOS -->
+                <section id="tab-galeria" class="tab-content">
+                    <h2 class="section-title">Cadastro de Fotos para a Galeria</h2>
+                    <form id="form-galeria" style="background:#f8fafc; padding:1.5rem; border-radius:8px; margin-bottom:2rem;">
+                        <div class="form-group"><label>Título da Foto</label><input type="text" id="galeria-titulo" required></div>
+                        <div class="form-group"><label>URL da Imagem</label><input type="text" id="galeria-url" required placeholder="https://..."></div>
+                        <button type="submit" class="btn btn-success">Adicionar Foto</button>
+                    </form>
+                    <div id="lista-galeria"></div>
+                </section>
+
+                <!-- 10. CONTATOS E REDES SOCIAIS -->
+                <section id="tab-contatos" class="tab-content">
+                    <h2 class="section-title">Edição de Contatos, Endereço e Redes Sociais</h2>
+                    <form id="form-contatos" style="background:#f8fafc; padding:1.5rem; border-radius:8px;">
+                        <div class="grid-2">
+                            <div class="form-group"><label>Telefone Principal</label><input type="text" id="empresa-tel"></div>
+                            <div class="form-group"><label>E-mail de Contato</label><input type="email" id="empresa-email"></div>
+                            <div class="form-group" style="grid-column: span 2;"><label>Endereço Completo</label><input type="text" id="empresa-end"></div>
+                            <div class="form-group"><label>Instagram (Link)</label><input type="text" id="empresa-insta"></div>
+                            <div class="form-group"><label>WhatsApp (Link/Número)</label><input type="text" id="empresa-zap"></div>
+                        </div>
+                        <button type="submit" class="btn btn-success">Salvar Informações</button>
+                    </form>
+                </section>
+
+                <!-- 11. CONFIGURAR NOMES DE TREINO -->
+                <section id="tab-treinos-config" class="tab-content">
+                    <h2 class="section-title">Configurar Nomes e Vídeos dos Treinos</h2>
+                    <p style="margin-bottom:1rem; color:#64748b;">Aqui você edita os nomes gerais e vídeos explicativos dos treinos de A a G.</p>
+                    <div id="config-treinos-container">
+                        <!-- Gerado via JS -->
+                    </div>
+                    <button class="btn btn-success" onclick="salvarConfigTreinos()" style="margin-top:1rem;">Salvar Configurações</button>
+                </section>
+
+                <!-- 12. TREINOS PRÉ-FEITOS / CURINGA -->
+                <section id="tab-treinos-padrao" class="tab-content">
+                    <h2 class="section-title">Cadastro de Treinos Curinga (Pré-feitos)</h2>
+                    <form id="form-treino-padrao" style="background:#f8fafc; padding:1.5rem; border-radius:8px; margin-bottom:2rem;">
+                        <div class="form-group"><label>Nome do Treino Padrão</label><input type="text" id="tp-nome" required placeholder="Ex: Hipertrofia Iniciante A"></div>
+                        <div class="form-group"><label>Grupo Muscular</label><input type="text" id="tp-grupo" required placeholder="Ex: Peito e Tríceps"></div>
+                        <div class="form-group"><label>Exercícios e Séries</label><textarea id="tp-exercicios" rows="4" placeholder="Ex: Supino Reto - 4x12"></textarea></div>
+                        <button type="submit" class="btn btn-success">Salvar Treino Curinga</button>
+                    </form>
+                    <div id="lista-treinos-padrao"></div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // CONTROLE DE ABAS
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.menu-list li').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // LOGIN SIMPLES
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(u === 'admin' && p === 'admin') {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                carregarTudo();
+            } else {
+                alert('Usuário ou senha incorretos! (Use admin / admin)');
+            }
+        });
+
+        function logout() {
+            document.getElementById('admin-panel').style.display = 'none';
+            document.getElementById('login-screen').style.display = 'flex';
+        }
+
+        // BANCO DE DADOS LOCAL (LOCALSTORAGE)
+        const getDB = (key) => JSON.parse(localStorage.getItem(key)) || [];
+        const saveDB = (key, data) => localStorage.setItem(key, JSON.stringify(data));
+
+        // 2, 3 & 4. ALUNOS
+        document.getElementById('form-aluno').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const alunos = getDB('alunos');
+            const novo = {
+                id: Date.now(),
+                nome: document.getElementById('aluno-nome').value,
+                doc: document.getElementById('aluno-doc').value,
+                tel: document.getElementById('aluno-tel').value,
+                end: document.getElementById('aluno-end').value,
+                atestadoVal: document.getElementById('aluno-atestado-val').value,
+                situacao: document.getElementById('aluno-situacao').value
+            };
+            alunos.push(novo);
+            saveDB('alunos', alunos);
+            e.target.reset();
+            renderAlunos();
+            alert('Aluno cadastrado com sucesso!');
+        });
+
+        function renderAlunos() {
+            const alunos = getDB('alunos');
+            const tbody = document.getElementById('tabela-alunos-body');
+            tbody.innerHTML = '';
+            alunos.forEach(a => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><b>${a.nome}</b></td>
+                        <td>${a.doc}</td>
+                        <td>${a.tel}<br><small>${a.end}</small></td>
+                        <td>${a.atestadoVal}</td>
+                        <td><span class="badge ${a.situacao === 'Em dia' ? 'badge-success' : 'badge-danger'}">${a.situacao}</span></td>
+                        <td class="actions-cell">
+                            <button class="btn" onclick="deletarAluno(${a.id})">Excluir</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function deletarAluno(id) {
+            if(confirm('Deseja realmente deletar este aluno?')) {
+                let alunos = getDB('alunos').filter(a => a.id !== id);
+                saveDB('alunos', alunos);
+                renderAlunos();
+            }
+        }
+
+        // 5. PLANOS
+        document.getElementById('form-plano').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const planos = getDB('planos');
+            planos.push({
+                id: Date.now(),
+                nome: document.getElementById('plano-nome').value,
+                valor: document.getElementById('plano-valor').value,
+                desc: document.getElementById('plano-desc').value
+            });
+            saveDB('planos', planos);
+            e.target.reset();
+            renderPlanos();
+        });
+
+        function renderPlanos() {
+            const planos = getDB('planos');
+            document.getElementById('lista-planos').innerHTML = planos.map(p => `
+                <div style="background:#f8fafc; padding:1rem; margin-bottom:0.5rem; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                    <div><b>${p.nome}</b> - R$ ${p.valor}<br><small>${p.desc}</small></div>
+                    <button class="btn btn-danger" onclick="removerItem('planos', ${p.id}, renderPlanos)">Remover</button>
+                </div>
+            `).join('');
+        }
+
+        // 6. AULAS
+        document.getElementById('form-aula').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const aulas = getDB('aulas');
+            aulas.push({
+                id: Date.now(),
+                nome: document.getElementById('aula-nome').value,
+                horario: document.getElementById('aula-horario').value,
+                foto: document.getElementById('aula-foto').value,
+                desc: document.getElementById('aula-desc').value,
+                lancado: false
+            });
+            saveDB('aulas', aulas);
+            e.target.reset();
+            renderAulas();
+        });
+
+        function renderAulas() {
+            const aulas = getDB('aulas');
+            document.getElementById('lista-aulas').innerHTML = aulas.map(a => `
+                <div style="background:#f8fafc; padding:1rem; margin-bottom:0.5rem; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                    <div><b>${a.nome}</b> (${a.horario}) <span class="badge ${a.lancado ? 'badge-success' : 'badge-danger'}">${a.lancado ? 'No Ar' : 'Rascunho'}</span></div>
+                    <div>
+                        <button class="btn btn-success" onclick="lancarSite('aulas', ${a.id}, renderAulas)">${a.lancado ? 'Atualizar no Site' : 'Lançar no Site'}</button>
+                        <button class="btn btn-danger" onclick="removerItem('aulas', ${a.id}, renderAulas)">Excluir</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 7. PROFESSORES
+        document.getElementById('form-prof').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const profs = getDB('profs');
+            profs.push({
+                id: Date.now(),
+                nome: document.getElementById('prof-nome').value,
+                crf: document.getElementById('prof-crf').value,
+                esp: document.getElementById('prof-esp').value,
+                desc: document.getElementById('prof-desc').value,
+                lancado: false
+            });
+            saveDB('profs', profs);
+            e.target.reset();
+            renderProfs();
+        });
+
+        function renderProfs() {
+            const profs = getDB('profs');
+            document.getElementById('lista-professores').innerHTML = profs.map(p => `
+                <div style="background:#f8fafc; padding:1rem; margin-bottom:0.5rem; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                    <div><b>${p.nome}</b> (CRF: ${p.crf}) - ${p.esp} <span class="badge ${p.lancado ? 'badge-success' : 'badge-danger'}">${p.lancado ? 'No Ar' : 'Rascunho'}</span></div>
+                    <div>
+                        <button class="btn btn-success" onclick="lancarSite('profs', ${p.id}, renderProfs)">${p.lancado ? 'Atualizar' : 'Lançar no Site'}</button>
+                        <button class="btn btn-danger" onclick="removerItem('profs', ${p.id}, renderProfs)">Excluir</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 8. EVENTOS
+        document.getElementById('form-evento').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const eventos = getDB('eventos');
+            eventos.push({
+                id: Date.now(),
+                titulo: document.getElementById('evento-titulo').value,
+                data: document.getElementById('evento-data').value,
+                desc: document.getElementById('evento-desc').value,
+                lancado: false
+            });
+            saveDB('eventos', eventos);
+            e.target.reset();
+            renderEventos();
+        });
+
+        function renderEventos() {
+            const eventos = getDB('eventos');
+            document.getElementById('lista-eventos').innerHTML = eventos.map(ev => `
+                <div style="background:#f8fafc; padding:1rem; margin-bottom:0.5rem; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                    <div><b>${ev.titulo}</b> (${ev.data}) <span class="badge ${ev.lancado ? 'badge-success' : 'badge-danger'}">${ev.lancado ? 'No Ar' : 'Rascunho'}</span></div>
+                    <div>
+                        <button class="btn btn-success" onclick="lancarSite('eventos', ${ev.id}, renderEventos)">${ev.lancado ? 'Atualizar' : 'Lançar no Site'}</button>
+                        <button class="btn btn-danger" onclick="removerItem('eventos', ${ev.id}, renderEventos)">Excluir</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 9. GALERIA
+        document.getElementById('form-galeria').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const fotos = getDB('galeria');
+            fotos.push({
+                id: Date.now(),
+                titulo: document.getElementById('galeria-titulo').value,
+                url: document.getElementById('galeria-url').value,
+                lancado: false
+            });
+            saveDB('galeria', fotos);
+            e.target.reset();
+            renderGaleria();
+        });
+
+        function renderGaleria() {
+            const fotos = getDB('galeria');
+            document.getElementById('lista-galeria').innerHTML = fotos.map(f => `
+                <div style="background:#f8fafc; padding:1rem; margin-bottom:0.5rem; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                    <div><b>${f.titulo}</b> <span class="badge ${f.lancado ? 'badge-success' : 'badge-danger'}">${f.lancado ? 'No Ar' : 'Rascunho'}</span></div>
+                    <div>
+                        <button class="btn btn-success" onclick="lancarSite('galeria', ${f.id}, renderGaleria)">${f.lancado ? 'Atualizar' : 'Lançar no Site'}</button>
+                        <button class="btn btn-danger" onclick="removerItem('galeria', ${f.id}, renderGaleria)">Excluir</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 10. CONTATOS E REDES SOCIAIS
+        document.getElementById('form-contatos').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const dados = {
+                tel: document.getElementById('empresa-tel').value,
+                email: document.getElementById('empresa-email').value,
+                end: document.getElementById('empresa-end').value,
+                insta: document.getElementById('empresa-insta').value,
+                zap: document.getElementById('empresa-zap').value
+            };
+            saveDB('contatos', dados);
+            alert('Informações de contato salvas!');
+        });
+
+        function carregarContatos() {
+            const c = JSON.parse(localStorage.getItem('contatos')) || {};
+            document.getElementById('empresa-tel').value = c.tel || '';
+            document.getElementById('empresa-email').value = c.email || '';
+            document.getElementById('empresa-end').value = c.end || '';
+            document.getElementById('empresa-insta').value = c.insta || '';
+            document.getElementById('empresa-zap').value = c.zap || '';
+        }
+
+        // 11. CONFIGURAR NOMES DE TREINO (A-G)
+        function carregarConfigTreinos() {
+            const container = document.getElementById('config-treinos-container');
+            const treinosConfig = getDB('treinosConfig');
+            const fichas = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+            container.innerHTML = fichas.map(f => {
+                const item = treinosConfig.find(t => t.ficha === f) || { nome: `Treino ${f}`, video: '' };
+                return `
+                    <div class="grid-2" style="margin-bottom:0.8rem; background:#f1f5f9; padding:0.8rem; border-radius:6px;">
+                        <div class="form-group"><label>Nome Treino ${f}</label><input type="text" id="cfg-nome-${f}" value="${item.nome}"></div>
+                        <div class="form-group"><label>URL Vídeo Explicativo</label><input type="text" id="cfg-video-${f}" value="${item.video}" placeholder="https://youtube.com/..."></div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function salvarConfigTreinos() {
+            const fichas = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+            const dados = fichas.map(f => ({
+                ficha: f,
+                nome: document.getElementById(`cfg-nome-${f}`).value,
+                video: document.getElementById(`cfg-video-${f}`).value
+            }));
+            saveDB('treinosConfig', dados);
+            alert('Configurações de treino salvas com sucesso!');
+        }
+
+        // 12. TREINOS CURINGA
+        document.getElementById('form-treino-padrao').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const tp = getDB('treinosPadrao');
+            tp.push({
+                id: Date.now(),
+                nome: document.getElementById('tp-nome').value,
+                grupo: document.getElementById('tp-grupo').value,
+                exercicios: document.getElementById('tp-exercicios').value
+            });
+            saveDB('treinosPadrao', tp);
+            e.target.reset();
+            renderTreinosPadrao();
+        });
+
+        function renderTreinosPadrao() {
+            const tp = getDB('treinosPadrao');
+            document.getElementById('lista-treinos-padrao').innerHTML = tp.map(t => `
+                <div style="background:#f8fafc; padding:1rem; margin-bottom:0.5rem; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                    <div><b>${t.nome}</b> (${t.grupo})</div>
+                    <button class="btn btn-danger" onclick="removerItem('treinosPadrao', ${t.id}, renderTreinosPadrao)">Excluir</button>
+                </div>
+            `).join('');
+        }
+
+        // UTILITÁRIOS GERAIS
+        function removerItem(key, id, callback) {
+            if(confirm('Tem certeza que deseja excluir?')) {
+                let dados = getDB(key).filter(item => item.id !== id);
+                saveDB(key, dados);
+                callback();
+            }
+        }
+
+        function lancarSite(key, id, callback) {
+            let dados = getDB(key);
+            let item = dados.find(i => i.id === id);
+            if(item) {
+                item.lancado = !item.lancado;
+                saveDB(key, dados);
+                callback();
+                alert(item.lancado ? 'Publicado no site oficial com sucesso!' : 'Removido do site oficial.');
+            }
+        }
+
+        function carregarTudo() {
+            renderAlunos();
+            renderPlanos();
+            renderAulas();
+            renderProfs();
+            renderEventos();
+            renderGaleria();
+            carregarContatos();
+            carregarConfigTreinos();
+            renderTreinosPadrao();
+        }
+    </script>
+</body>
+</html>
