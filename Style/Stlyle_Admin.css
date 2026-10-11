@@ -74,6 +74,12 @@
             font-size: 1rem;
         }
 
+        .form-group input[readonly] {
+            background: #f1f5f9;
+            color: #475569;
+            cursor: not-allowed;
+        }
+
         .password-field {
             position: relative;
         }
@@ -149,6 +155,302 @@
 
         .btn-success:hover {
             background: #16a34a;
+        }
+
+        .specialty-input-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .specialty-input-row input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .btn-specialty {
+            width: auto;
+            flex-shrink: 0;
+            padding: 0.65rem 1rem;
+        }
+
+        .specialty-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.65rem;
+        }
+
+        .specialty-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.35rem 0.65rem;
+            border-radius: 999px;
+            background: #dbeafe;
+            color: #1e40af;
+            font-size: 0.85rem;
+        }
+
+        .specialty-remove {
+            border: 0;
+            padding: 0;
+            background: transparent;
+            color: inherit;
+            font-size: 1rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .finance-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .finance-section h3 {
+            margin-bottom: 0.4rem;
+        }
+
+        .student-search {
+            max-width: 520px;
+            margin: 1rem 0;
+        }
+
+        .student-search input {
+            background: #ffffff;
+        }
+
+        .receipt-paper-setting {
+            max-width: 250px;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .receipt-paper-setting select {
+            width: 100%;
+            padding: 0.65rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: #ffffff;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        .finance-description {
+            margin-bottom: 0.75rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .finance-section input[type="number"] {
+            width: 90px;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+
+        .finance-action {
+            width: auto;
+            min-width: max-content;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .finance-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .student-section-nav {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .student-section-button {
+            width: 100%;
+            min-height: 86px;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: #ffffff;
+            color: #1e293b;
+            text-align: left;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+        }
+
+        .student-section-button:hover {
+            background: #ffffff;
+            border-color: #bfdbfe;
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .student-section-button[aria-pressed="true"] {
+            background: #eff6ff;
+            border-color: #93c5fd;
+            color: #1d4ed8;
+            box-shadow: 0 5px 14px rgba(37, 99, 235, 0.12);
+        }
+
+        .student-section-button:focus-visible {
+            outline: 3px solid rgba(37, 99, 235, 0.35);
+            outline-offset: 3px;
+        }
+
+        .student-section-icon {
+            width: 44px;
+            height: 44px;
+            flex: 0 0 44px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .student-section-button:nth-child(2) .student-section-icon {
+            background: #ecfdf5;
+            color: #059669;
+        }
+
+        .student-section-button:nth-child(3) .student-section-icon {
+            background: #f5f3ff;
+            color: #7c3aed;
+        }
+
+        .student-section-icon svg {
+            width: 23px;
+            height: 23px;
+        }
+
+        .student-section-copy {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            gap: 0.2rem;
+            min-width: 0;
+        }
+
+        .student-section-copy strong {
+            font-size: 0.92rem;
+            font-weight: 650;
+        }
+
+        .student-section-copy small {
+            color: #64748b;
+            font-size: 0.78rem;
+            font-weight: 400;
+        }
+
+        .student-section-arrow {
+            color: #94a3b8;
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+
+        .student-section-button[aria-pressed="true"] .student-section-arrow {
+            color: #2563eb;
+        }
+
+        @media (max-width: 760px) {
+            .student-section-nav {
+                grid-template-columns: 1fr;
+                gap: 0.65rem;
+            }
+
+            .student-section-button {
+                min-height: 72px;
+            }
+        }
+
+        .student-section-panel {
+            display: none;
+        }
+
+        .student-section-panel.active {
+            display: block;
+        }
+
+        .student-section {
+            scroll-margin-top: 1rem;
+        }
+
+        .student-form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .student-form-actions .btn {
+            width: auto;
+        }
+
+        .btn-secondary {
+            background: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background: #475569;
+        }
+
+        .btn-edit {
+            background: #0f766e;
+        }
+
+        .btn-edit:hover {
+            background: #115e59;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        #secao-alunos-cadastrados table {
+            min-width: 900px;
+        }
+
+        .plan-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            padding: 1rem 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #ffffff;
+        }
+
+        .plan-card > div {
+            display: grid;
+            gap: 0.3rem;
+        }
+
+        .plan-card strong {
+            color: var(--text-color);
+        }
+
+        .plan-card small,
+        .empty-list-message {
+            color: #64748b;
+        }
+
+        .plan-remove-button {
+            width: auto;
+            flex: 0 0 auto;
+        }
+
+        main {
+            scroll-behavior: smooth;
         }
 
         /* PAINEL ADMIN */

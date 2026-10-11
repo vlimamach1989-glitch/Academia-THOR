@@ -146,14 +146,64 @@
             </aside>
 
             <main>
-                <!-- 2, 3 & 4. CADASTRO, VISUALIZAÇÃO E EDIÇÃO DE ALUNOS -->
+                <!-- CADASTRO, VISUALIZAÇÃO E EDIÇÃO DE ALUNOS -->
                 <section id="tab-alunos" class="tab-content active">
                     <h2 class="section-title">Gerenciamento de Alunos</h2>
 
-                    <form id="form-aluno">
-                        <h3>Cadastrar Novo Aluno</h3>
+                    <nav class="student-section-nav" aria-label="Seções do gerenciamento de alunos">
+                        <button type="button" class="student-section-button" aria-controls="secao-cadastro-aluno" aria-pressed="false" onclick="mostrarSecaoAluno('secao-cadastro-aluno', this)">
+                            <span class="student-section-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="10" cy="7" r="4"></circle>
+                                    <path d="M19 8v6M22 11h-6"></path>
+                                </svg>
+                            </span>
+                            <span class="student-section-copy">
+                                <strong>Cadastrar aluno</strong>
+                                <small>Adicionar um novo cadastro</small>
+                            </span>
+                            <span class="student-section-arrow" aria-hidden="true">›</span>
+                        </button>
+                        <button type="button" class="student-section-button" aria-controls="secao-financeira" aria-pressed="false" onclick="mostrarSecaoAluno('secao-financeira', this)">
+                            <span class="student-section-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                                    <path d="M3 10h18M7 15h3"></path>
+                                </svg>
+                            </span>
+                            <span class="student-section-copy">
+                                <strong>Situação financeira</strong>
+                                <small>Vencimentos e baixas</small>
+                            </span>
+                            <span class="student-section-arrow" aria-hidden="true">›</span>
+                        </button>
+                        <button type="button" class="student-section-button" aria-controls="secao-alunos-cadastrados" aria-pressed="false" onclick="mostrarSecaoAluno('secao-alunos-cadastrados', this)">
+                            <span class="student-section-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </span>
+                            <span class="student-section-copy">
+                                <strong>Alunos cadastrados</strong>
+                                <small>Consultar a lista de alunos</small>
+                            </span>
+                            <span class="student-section-arrow" aria-hidden="true">›</span>
+                        </button>
+                    </nav>
+
+                    <section id="secao-cadastro-aluno" class="student-section-panel" aria-labelledby="cadastro-aluno-title">
+                        <form id="form-aluno">
+                        <h3 id="cadastro-aluno-title" class="student-section">Cadastrar Novo Aluno</h3>
 
                         <div class="grid-2">
+
+                            <div class="form-group">
+                                <label for="aluno-matricula">Matrícula (gerada automaticamente)</label>
+                                <input type="text" id="aluno-matricula" readonly placeholder="Gerada ao cadastrar">
+                            </div>
 
                             <div class="form-group">
                                 <label>Nome Completo</label>
@@ -173,6 +223,18 @@
                             <div class="form-group">
                                 <label>Endereço</label>
                                 <input type="text" id="aluno-end" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="aluno-vencimento">Dia de vencimento mensal</label>
+                                <input type="number" id="aluno-vencimento" min="1" max="31" step="1"
+                                    placeholder="Ex: 10" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="aluno-mensalidade">Mensalidade (R$)</label>
+                                <input type="number" id="aluno-mensalidade" min="0" step="0.01"
+                                    placeholder="Ex: 100,00">
                             </div>
 
                             <!-- Upload da Foto do Aluno -->
@@ -236,27 +298,73 @@
 
                         </div>
 
-                        <button type="submit" class="btn btn-success">Salvar Aluno</button>
-                    </form>
+                        <div class="student-form-actions">
+                            <button type="submit" id="btn-salvar-aluno" class="btn btn-success">Salvar Aluno</button>
+                            <button type="button" id="btn-cancelar-edicao-aluno" class="btn btn-secondary" hidden
+                                onclick="cancelarEdicaoAluno()">Cancelar edição</button>
+                        </div>
+                        </form>
+                    </section>
 
-                    <h3>Alunos Cadastrados</h3>
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Foto</th>
-                                    <th>Nome / Doc</th>
-                                    <th>Contato / Endereço</th>
-                                    <th>Plano / Aulas</th>
-                                    <th>Atestado</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabela-alunos-body">
-                                <!-- Preenchido via JS dinamicamente -->
-                            </tbody>
-                        </table>
-                    </div>
+                    <section id="secao-financeira" class="finance-section student-section-panel" aria-labelledby="finance-title">
+                        <h3 id="finance-title">Situação Financeira</h3>
+                        <p class="finance-description">O aluno fica atrasado a partir do dia seguinte ao vencimento. Registre cada pagamento recebido com uma baixa manual.</p>
+                        <div class="form-group student-search">
+                            <label for="busca-financeira">Buscar aluno por nome ou matrícula</label>
+                            <input type="search" id="busca-financeira" placeholder="Digite o nome ou a matrícula do aluno">
+                        </div>
+                        <div class="form-group receipt-paper-setting">
+                            <label for="largura-comprovante">Largura do comprovante térmico</label>
+                            <select id="largura-comprovante">
+                                <option value="80">80 mm</option>
+                                <option value="58">58 mm</option>
+                            </select>
+                        </div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Matrícula</th>
+                                        <th>Aluno</th>
+                                        <th>Dia de vencimento</th>
+                                        <th>Situação</th>
+                                        <th>Última baixa</th>
+                                        <th>Valor devido</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabela-financeiro-body"></tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section id="secao-alunos-cadastrados" class="student-section-panel" aria-labelledby="alunos-cadastrados-title">
+                        <h3 id="alunos-cadastrados-title">Alunos Cadastrados</h3>
+                        <div class="form-group student-search">
+                            <label for="busca-alunos">Buscar aluno por nome ou matrícula</label>
+                            <input type="search" id="busca-alunos" placeholder="Digite o nome ou a matrícula do aluno">
+                        </div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Foto</th>
+                                        <th>Matrícula</th>
+                                        <th>Nome</th>
+                                        <th>Documento</th>
+                                        <th>Contato</th>
+                                        <th>Endereço</th>
+                                        <th>Plano / Aulas</th>
+                                        <th>Atestado</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabela-alunos-body">
+                                    <!-- Preenchido via JS dinamicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
                 </section>
 
                 <section id="tab-planos" class="tab-content">
@@ -293,7 +401,7 @@
                             <div class="form-group"><label>Horário</label><input type="text" id="aula-horario"
                                     placeholder="Ex: Seg/Qua 19:00"></div>
                         </div>
-                        <div class="form-group"><label>Foto (URL)</label><input type="text" id="aula-foto"></div>
+                        <div class="form-group"><label>Foto (URL)</label><input type="file" id="aula-foto"></div>
                         <div class="form-group"><label>Descrição</label><textarea id="aula-desc" rows="2"></textarea>
                         </div>
                         <button type="submit" class="btn btn-success">Salvar Aula</button>
@@ -312,10 +420,20 @@
                             <div class="form-group"><label>CRF / Registro</label><input type="text" id="prof-crf"
                                     required></div>
                         </div>
-                        <div class="form-group"><label>Especialidades</label><input type="text" id="prof-esp"
-                                placeholder="Ex: Musculação, Pilates"></div>
+                        <div class="form-group">
+                            <label for="prof-esp">Especialidades</label>
+                            <div class="specialty-input-row">
+                                <input type="text" id="prof-esp" placeholder="Digite uma especialidade">
+                                <button type="button" class="btn btn-specialty" onclick="addProfessorSpecialty()">Adicionar</button>
+                            </div>
+                            <div id="prof-especialidades-lista" class="specialty-list" aria-live="polite"></div>
+                        </div>
                         <div class="form-group"><label>Descrição / Bio</label><textarea id="prof-desc"
                                 rows="2"></textarea></div>
+                        <div class="form-group">
+                            <label>Foto do Professor</label>
+                            <input type="file" id="prof-foto" accept="image/*">
+                        </div>
                         <button type="submit" class="btn btn-success">Salvar Professor</button>
                     </form>
                     <div id="lista-professores"></div>
@@ -333,6 +451,11 @@
                         </div>
                         <div class="form-group"><label>Descrição</label><textarea id="evento-desc" rows="2"></textarea>
                         </div>
+                        <div class="form-group">
+                            <label>Foto do Evento</label>
+                            <input type="file" id="evento-foto" accept="image/*">
+                        </div>
+
                         <button type="submit" class="btn btn-success">Salvar Evento</button>
                     </form>
                     <div id="lista-eventos"></div>
@@ -347,6 +470,8 @@
                                 required></div>
                         <div class="form-group"><label>URL da Imagem</label><input type="text" id="galeria-url" required
                                 placeholder="https://..."></div>
+                        <div class="form-group"><label>Imagem</label><input type="file" id="galeria-imagem" required>
+                        </div>
                         <button type="submit" class="btn btn-success">Adicionar Foto</button>
                     </form>
                     <div id="lista-galeria"></div>
@@ -403,8 +528,8 @@
         </div>
     </div>
 
-  <script src="JavaScript/Script_Admin.js"></script>
-  
+    <script src="JavaScript/Script_Admin.js"></script>
+
 </body>
 
 </html>
